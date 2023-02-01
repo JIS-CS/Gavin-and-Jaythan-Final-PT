@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title> Covid Simulator </title>
+    <script src="script.js"></script>
+
+</head>
+
+<body>
+    <h1> Pandemic Predictor Pro </h1>
+    
+    <h3> Insert your scenario: </h3>
+    <label> Starting Population: </label> <input id="startPop">
+    
+    <br>
+
+    
+    <label> Amount of Single Ply Masks Distributed: </label> <input id="singlePlyMasks"><br>
+    <label> Amount of N95 Masks Distributed: </label><input id="n95Masks"><br>
+    <label> Frequency of Vaccination rates: </label> <input id="freqVac"><br>
+    <label> Degree of Social Distancing: </label> <input id="socialDistancing"><br>
+    
+    <br>
+    <img src ="https://pngimg.com/d/buttons_PNG51.png" width="200px" onclick="simulate()"> 
+
+    <!-- Output: amount of deaths in regard to factors inputted by user -->
+    <h3 id="deaths"> Total Deaths: </h3>
+
+</body>
+</html>
