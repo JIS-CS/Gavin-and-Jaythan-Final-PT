@@ -1,4 +1,4 @@
-# Plague.inc
+# Pandemic Predictor Pro
 
 Developers:
 - Gavin Lim (65484)
