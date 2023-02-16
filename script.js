@@ -1,25 +1,27 @@
-// We see how many deaths we end u with after changin gthe circumstances
+// We see how many deaths end with after changing the circumstances
 
 // Starting population variable
 
-
 function calculations() {
-    let singlePly = getElementbyId("singlePlyMasks").value;
-    let n95Mask = getElementbyId("n95Masks").value;
-    let vaccinationvalue = getElementbyId("freqVac").value;
-    let socialvalue = getElementbyId("socialDistancing").value;
+    
 
-    let x1 = (singlePly * 0,5) + (n95Mask * 1) + (vaccinationvalue * 2) + (socialvalue * 0,6);
+    let x1 = (singlePly * 0,5) + (n95Mask * 1) + (vaccinationValue * 2) + (socialValue * 0,6);
 }
 
 function simulate() {
-    let startPop = document.getElementById("startPop").value;
-    let amountSurvivors = parseInt(startPop * 0.1);
-    let amountDeaths = parseInt(startPop * 0.9);
+    let startPop = parseInt(document.getElementById("startPop").value);
+    let singlePly = parseInt(document.getElementById("singlePlyMasks").value);
+    let vaccinationvalue = parseInt(document.getElementById("n95Masks").value);
+    let freqVac = parseInt(document.getElementById("freqVac").value);
+    let amountSurvivors = startPop * 0.1;
+    let amountDeaths = startPop * 0.9;
+    let masks1 = singlePly * 0.1;
+    let vaccines = vaccinationvalue * 0.5;
+    
 
     // Without any changes to the factors, 90% of the population dies from the virus
 
-    document.getElementById("survivors").innerHTML += amountSurvivors;
+    document.getElementById("survivors").innerHTML += amountSurvivors + masks1 + vaccines;
 
     document.getElementById("deaths").innerHTML += amountDeaths;
 }
