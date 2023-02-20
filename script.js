@@ -1,30 +1,63 @@
-// We see how many deaths end with after changing the circumstances
+// Global Variables
 
 // Starting population variable
 
-function calculations() {
-    
-
-    let x1 = (singlePly * 0,5) + (n95Mask * 1) + (vaccinationValue * 2);
-}
-
 function simulate() {
-    let startPop = parseInt(document.getElementById("startPop").value);
-    let singlePly = parseInt(document.getElementById("singlePlyMasks").value); 
-    
-    let vaccinationvalue = parseInt(document.getElementById("n95Masks").value);
-    let freqVac = parseInt(document.getElementById("freqVac").value);
+    let finalStartPop = parseInt(document.getElementById("startPop").value) * 0.1;
 
-    let amountSurvivors = startPop * 0.1;
-    let amountDeaths = startPop * 0.9;
-    let masks1 = singlePly * 0.1;
-    let vaccines = vaccinationvalue * 0.5;
-    
-    
-    // Without any changes to the factors, 90% of the population dies from the virus
-    let finalSurvivors = amountSurvivors + masks1 + vaccines;
+    // Inital finalSurvivors value; regardless of factors, finalSurvivors = 10% of startPop
+    let finalSurvivors = parseInt(finalStartPop * 0.1);
+
+    // Factor of success rate of living for vaccine: 100%
+    // let freqVac = parseInt(document.getElementById("freqVac").value);
+
+    // let finalSurvivors = parseInt(finalSurvivors + freqVac);
+
+    // let singlePlyMasks = parseInt(document.getElementById("singlePlyMasks").value); 
+    // let n95Masks = parseInt(document.getElementById("n95Masks").value);
 
     document.getElementById("survivors").innerHTML += finalSurvivors;
-
-    document.getElementById("deaths").innerHTML += amountDeaths;
+    document.getElementById("deaths").innerHTML += finalDeaths;
 }
+
+// function simulatePandemic() {
+//     let startPop = parseInt(document.getElementById("startPop").value);
+//     let totalSurvivors = 0;
+    
+//     // Simulate the spread of the pandemic
+//     while (infected > 0) {
+//       const newInfections = Math.ceil(infected * 0.2);
+//       infected += newInfections;
+//       const deaths = Math.floor(infected * 0.05);
+//       infected -= deaths;
+//       totalSurvivors += (infected - deaths);
+//     }
+    
+//     // Print the final number of survivors
+//     const finalSurvivors = Math.floor(startPop * 0.1);
+//     console.log(`Out of the original ${startPop} population, only ${finalSurvivors} survived the pandemic.`);
+    
+//     return totalSurvivors;
+//   }
+
+function simulatePandemic() {
+    const startPop = parseInt(document.getElementById("startPop").value);
+    let infected = startPop;
+    let totalSurvivors = 0;
+    let totalDeaths = 0;
+  
+    while (infected > 0) {
+      const newInfections = Math.ceil(infected * 0.2);
+      infected += newInfections;
+      const deaths = Math.floor(infected * 0.05);
+      infected -= deaths;
+      totalDeaths += deaths;
+      totalSurvivors += (infected - deaths);
+    }
+  
+    const finalSurvivors = Math.floor(startPop * 0.1);
+    const finalDeaths = totalDeaths + (startPop - totalSurvivors - totalDeaths);
+    
+    document.getElementById("survivors").innerHTML += finalSurvivors;
+    document.getElementById("deaths").innerHTML += finalDeaths;
+  }
