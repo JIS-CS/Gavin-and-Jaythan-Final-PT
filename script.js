@@ -10,7 +10,8 @@ function calculations() {
 
 function simulate() {
     let startPop = parseInt(document.getElementById("startPop").value);
-    let singlePly = parseInt(document.getElementById("singlePlyMasks").value);
+    let singlePly = parseInt(document.getElementById("singlePlyMasks").value); 
+    
     let vaccinationvalue = parseInt(document.getElementById("n95Masks").value);
     let freqVac = parseInt(document.getElementById("freqVac").value);
 
