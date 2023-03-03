@@ -1,30 +1,27 @@
-function simulatePandemic() {
+function simulate() {
   let startPop = parseInt(document.getElementById("startPop").value);
   let singlePlyMasks = parseInt(document.getElementById("singlePlyMasks").value);
   let n95Masks = parseInt(document.getElementById("n95Masks").value);
-  let freqVac = parseFloat(document.getElementById("freqVac").value);
+  let freqVac = parseInt(document.getElementById("freqVac").value);
 
-  // Validate user input
-  if (isNaN(startPop) || isNaN(singlePlyMasks) || isNaN(n95Masks) || isNaN(freqVac)) {
-    alert("Please enter a valid number for all input fields.");
-    return;
-  }
+  // Calculate survival rates based on masks distributed
+  let singlePlySurvivalRate = singlePlyMasks > 0 ? 0.4 : 0;
+  let n95SurvivalRate = n95Masks > 0 ? 0.8 : 0;
 
-  // Calculate the number of deaths
-  let totalDeaths = startPop * 0.9;
-  let maskedDeaths = (singlePlyMasks * 0.4) + (n95Masks * 0.4);
-  let unmaskedDeaths = (totalDeaths - maskedDeaths) * (1 - freqVac) * 0.1;
-  let totalDeathsAfterVaccine = maskedDeaths + unmaskedDeaths;
+  // Calculate number of lives saved based on masks distributed
+  let singlePlyLivesSaved = Math.min(singlePlyMasks, startPop) * singlePlySurvivalRate;
+  let n95LivesSaved = Math.min(n95Masks, startPop) * n95SurvivalRate;
+  let totalLivesSaved = Math.round(singlePlyLivesSaved + n95LivesSaved);
 
-  // Calculate the number of survivors
-  let survivors = startPop - totalDeathsAfterVaccine;
+  // Calculate total deaths
+  let totalDeaths = startPop - totalLivesSaved - Math.round(startPop * freqVac * 0.1);
 
-  // If the number of survivors is negative, set it to 0
-  if (survivors < 0) {
-    survivors = 0;
-  }
+  // Ensure that deaths and survivors cannot be negative or exceed the starting population
+  totalDeaths = Math.max(0, totalDeaths);
+  totalDeaths = Math.min(totalDeaths, startPop);
+  let totalSurvivors = Math.min(startPop - totalDeaths, startPop);
 
-  // Update the HTML with the results
-  document.getElementById("deaths").innerHTML = survivors;
-  document.getElementById("survivors").innerHTML = totalDeathsAfterVaccine;
+  // Output results
+  document.getElementById("deaths").innerHTML = totalDeaths;
+  document.getElementById("survivors").innerHTML = totalSurvivors;
 }
