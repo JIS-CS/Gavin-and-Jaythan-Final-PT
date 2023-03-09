@@ -5,26 +5,32 @@
     <title> Pandemic Predictor Pro </title>
     <script src="script.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
+
+    <!-- Reference to Montserrat Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
 </head>
 
 <body>
-    <h1> Pandemic Predictor Pro </h1>
+    <h1 id="title"> Pandemic Predictor Pro </h1>
     <h3> Insert your desired scenario: </h3>
 
-    <label> Starting Population: </label> <input id="startPop"> <br>
-    <label> Frequency of Vaccination Rates: </label> <input id="freqVac"> <br>
-    <label> Amount of 1-Ply Masks Distributed: </label> <input id="singlePlyMasks"> <br>
-    <label> Amount of N95 Masks Distributed: </label> <input id="n95Masks"> <br>
+    <label> Starting Population: </label> <br>
+    <input type="number" id="startPop" name="startPop" required><br>
 
-    <button onclick="simulate()"> Simulate </button>
+    <label> Frequency of Vaccination Rates: </label> <br>
+    <input type="number" id="freqVac" name="freqVac" required><br>
 
-    <!-- Output: amount of deaths and survivors after calculation -->
-    <h3>  Deaths: </h3> 
-    <span id="deaths"></span>
+    <label> Amount of Masks Distributed: </label> <br>
+    <input type="number" id="masks" name="masks" required><br>
 
-    <h3>  Survivors: </h3> 
-    <span id="survivors"></span>
+    <button type="button" onclick="simulate()"> Simulate Pandemic </button>
+
+    <!-- Output: amount of deaths, survivors and extra information after calculation -->
+    <h3> Statistics: </h3>
+    <span id="output"></span>
 
 </body>
-</html>
 
+</html>

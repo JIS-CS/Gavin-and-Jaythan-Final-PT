@@ -1,27 +1,44 @@
 function simulate() {
-  let startPop = parseInt(document.getElementById("startPop").value);
-  let singlePlyMasks = parseInt(document.getElementById("singlePlyMasks").value);
-  let n95Masks = parseInt(document.getElementById("n95Masks").value);
-  let freqVac = parseInt(document.getElementById("freqVac").value);
+  let startPop = document.getElementById("startPop").value;
+  let vaccines = document.getElementById("freqVac").value;
+  let masks = document.getElementById("masks").value;
 
-  // Calculate survival rates based on masks distributed
-  let singlePlySurvivalRate = singlePlyMasks > 0 ? 0.4 : 0;
-  let n95SurvivalRate = n95Masks > 0 ? 0.8 : 0;
+  let maxVaccines = startPop;
+  let maxMasks = startPop;
+  let deaths = Math.round(startPop * 0.9); // 90% of the starting population
+  let survivors = Math.max(startPop - deaths, 0);
 
-  // Calculate number of lives saved based on masks distributed
-  let singlePlyLivesSaved = Math.min(singlePlyMasks, startPop) * singlePlySurvivalRate;
-  let n95LivesSaved = Math.min(n95Masks, startPop) * n95SurvivalRate;
-  let totalLivesSaved = Math.round(singlePlyLivesSaved + n95LivesSaved);
+  if (vaccines > maxVaccines) {
+    vaccines = maxVaccines;
+  }
 
-  // Calculate total deaths
-  let totalDeaths = startPop - totalLivesSaved - Math.round(startPop * freqVac * 0.1);
+  if (masks > maxMasks) {
+    masks = maxMasks;
+  }
 
-  // Ensure that deaths and survivors cannot be negative or exceed the starting population
-  totalDeaths = Math.max(0, totalDeaths);
-  totalDeaths = Math.min(totalDeaths, startPop);
-  let totalSurvivors = Math.min(startPop - totalDeaths, startPop);
+  let savedByVaccine = 0;
+  let savedByMask = 0;
 
-  // Output results
-  document.getElementById("deaths").innerHTML = totalDeaths;
-  document.getElementById("survivors").innerHTML = totalSurvivors;
+  // Simulating the effect of vaccines
+  for (let i = 0; i < vaccines; i++) {
+    if (survivors > 0) {
+      survivors++;
+      savedByVaccine++;
+    }
+  }
+
+  // Simulating the effect of masks
+  for (let i = 0; i < masks; i++) {
+    if (survivors > 0 && Math.random() < 0.4) { // 40% chance of survival with mask
+      survivors++;
+      savedByMask++;
+    }
+  }
+
+  deaths = Math.max(deaths - savedByVaccine - savedByMask, 0);
+  let output = `  Deaths: ${deaths} <br>
+                  Survivors: ${Math.min(survivors, startPop)} <br>
+                  Lives Saved by Vaccines: ${savedByVaccine} <br>
+                  Lives Saved by Masks: ${savedByMask} <br>`;
+  document.getElementById("output").innerHTML = output;
 }
