@@ -5,32 +5,34 @@
     <title> Pandemic Predictor Pro </title>
     <script src="script.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
-
-    <!-- Reference to Montserrat Font -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    
 </head>
 
 <body>
-    <h1 id="title"> Pandemic Predictor Pro </h1>
-    <h3> Insert your desired scenario: </h3>
 
-    <label> Starting Population: </label> <br>
-    <input type="number" id="startPop" name="startPop" required><br>
+    <h1> Pandemic Predictor Pro </h1><br><br>
+    <p id="slogan"> input your desired scenario and see how everything unfolds... </p>
 
-    <label> Frequency of Vaccination Rates: </label> <br>
-    <input type="number" id="freqVac" name="freqVac" required><br>
+    <br><br>
 
-    <label> Amount of Masks Distributed: </label> <br>
-    <input type="number" id="masks" name="masks" required><br>
+    <label> Starting Population: </label><br>
+    <input type="number" id="startPop"><br>
 
-    <button type="button" onclick="simulate()"> Simulate Pandemic </button>
+    <label> Frequency of Vaccination Rates: </label><br>
+    <input type="number" id="freqVac"><br>
+
+    <label> Amount of Masks Distributed: </label><br>
+    <input type="number" id="masks"><br><br>
+
+    <button
+        onclick="simulate(document.getElementById('startPop').value, document.getElementById('freqVac').value, document.getElementById('masks').value)"
+        id="simulate-btn" class='glowing-btn'><span class='glowing-txt'><span class='faulty-letter'></span> SIMULATE
+        </span></button>
+
+    <br><br><br><br>
 
     <!-- Output: amount of deaths, survivors and extra information after calculation -->
     <h3> Statistics: </h3>
     <span id="output"></span>
-
 </body>
 
 </html>

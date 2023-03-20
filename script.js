@@ -1,15 +1,11 @@
-function simulate() {
-  let startPop = document.getElementById("startPop").value;
-  let vaccines = document.getElementById("freqVac").value;
-  let masks = document.getElementById("masks").value;
-
+function simulate(startPop, freqVac, masks) {
   let maxVaccines = startPop;
   let maxMasks = startPop;
   let deaths = Math.round(startPop * 0.9); // 90% of the starting population
   let survivors = Math.max(startPop - deaths, 0);
 
-  if (vaccines > maxVaccines) {
-    vaccines = maxVaccines;
+  if (freqVac > maxVaccines) {
+    freqVac = maxVaccines;
   }
 
   if (masks > maxMasks) {
@@ -20,7 +16,7 @@ function simulate() {
   let savedByMask = 0;
 
   // Simulating the effect of vaccines
-  for (let i = 0; i < vaccines; i++) {
+  for (let i = 0; i < freqVac; i++) {
     if (survivors > 0) {
       survivors++;
       savedByVaccine++;
@@ -37,8 +33,22 @@ function simulate() {
 
   deaths = Math.max(deaths - savedByVaccine - savedByMask, 0);
   let output = `  Deaths: ${deaths} <br>
-                  Survivors: ${Math.min(survivors, startPop)} <br>
-                  Lives Saved by Vaccines: ${savedByVaccine} <br>
-                  Lives Saved by Masks: ${savedByMask} <br>`;
+                Survivors: ${Math.min(survivors, startPop)} <br>
+                Lives Saved by Vaccines: ${savedByVaccine} <br>
+                Lives Saved by Masks: ${savedByMask} <br>`;
   document.getElementById("output").innerHTML = output;
 }
+
+// Get input values and call the simulate function
+const startPopInput = document.getElementById("startPop");
+const freqVacInput = document.getElementById("freqVac");
+const masksInput = document.getElementById("masks");
+const simulateBtn = document.querySelector("button");p
+
+simulateBtn.addEventListener("click", function () {
+  const startPop = parseInt(startPopInput.value);
+  const freqVac = parseInt(freqVacInput.value);
+  const masks = parseInt(masksInput.value);
+
+  simulate(startPop, freqVac, masks);
+});
