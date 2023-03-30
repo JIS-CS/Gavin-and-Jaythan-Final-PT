@@ -8,31 +8,55 @@
 </head>
 
 <body>
-
-    <h1> Pandemic Predictor Pro </h1><br><br>
-    <p id="slogan"> input your desired scenario and see how everything unfolds... </p>
-
     <br><br>
 
-    <label> Starting Population: </label><br>
-    <input type="number" id="startPop"><br>
+    <h1> Pandemic Predictor Pro </h1><br><br>
+    <p id="slogan"> input your desired scenario and see how everything unfolds... </p><br><br>
 
-    <label> Frequency of Vaccination Rates: </label><br>
-    <input type="number" id="freqVac"><br>
+    <!-- Inputboxes -->
+    <label> Starting Population: </label><br><input type="number" id="startPop"><br>
+    <label> Amount of Vaccinations Available: </label><br><input type="number" id="freqVac"><br>
+    <label> Amount of Masks Avaliable: </label><br><input type="number" id="freqMasks">
 
-    <label> Amount of Masks Distributed: </label><br>
-    <input type="number" id="masks"><br><br>
+    <!-- Modified from https://codepen.io/Ks145/pen/MWGxbYr 
+        Title: Button Glow
+        Author: Kshitij (@Ks145 on codepen) -->
 
-    <button
-        onclick="simulate(document.getElementById('startPop').value, document.getElementById('freqVac').value, document.getElementById('masks').value)"
-        id="simulate-btn" class='glowing-btn'><span class='glowing-txt'><span class='faulty-letter'></span> SIMULATE
-        </span></button>
+    <!-- Button -->
+    <table>
+        <tr>
+            <td>
+                <button
+                    onclick="simulate(parseInt(document.getElementById('startPop').value), parseInt(document.getElementById('freqVac').value), parseInt(document.getElementById('freqMasks').value))"
+                    id="simulate-btn" class='glowing-btn'><span class='glowing-txt'><span class='faulty-letter'></span>
+                        SIMULATE </span></button>
+            </td>
+            <td>
+                <button onclick="restart()" class='glowing-btn'><span class='glowing-txt'><span
+                            class='faulty-letter'></span> RESTART </span></button>
+            </td>
+        </tr>
+    </table><br><br><br>
 
-    <br><br><br><br>
+    <!-- End of citation -->
 
-    <!-- Output: amount of deaths, survivors and extra information after calculation -->
-    <h3> Statistics: </h3>
-    <span id="output"></span>
+    <!-- Output:  Deaths, Survivors & Extra Info -->
+
+    <table border="1">
+        <tr>
+            <th>Simulation Number</th>
+            <th>Starting Population</th>
+            <th>Total Vaccinations Provided</th>
+            <th>Total Masks Provided</th>
+            <th>Deaths</th>
+            <th>Survivors</th>
+        </tr>
+
+        <tbody id="addOn"></tbody>
+        <!--This must be added in order for it to be able to add a new row with the new data from a new simulation-->
+
+    </table>
+
 </body>
 
 </html>

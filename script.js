@@ -1,54 +1,81 @@
-function simulate(startPop, freqVac, masks) {
-  let maxVaccines = startPop;
-  let maxMasks = startPop;
+// Define an empty array list to store simulation results
+let simulationResults = [];
+
+function simulate(startPop, freqVac, freqMasks) {
+  
+  // Check if freqVac and freqMasks are valid numbers
+  if ((freqVac === "" || freqVac < 0 || isNaN(freqVac)) || (freqMasks === "" || freqMasks < 0 || isNaN(freqMasks))) {
+    alert("Please make sure you enter valid numbers.");
+    return;
+  }
+
+  // Calculate inital deaths and survivors
+
+  // Deaths is initially 90% of the starting population
   let deaths = Math.round(startPop * 0.9); // 90% of the starting population
+  let maxDeaths = startPop - 1; // The maximum number of deaths that can occur is the starting population - 1
   let survivors = Math.max(startPop - deaths, 0);
 
+  // Calculate the maximum number of vaccines and masks
+  let maxVaccines = startPop;
+  let maxMasks = startPop;
+
+  // Give a capcity limit for the vaccines and mask parameters to the max value
   if (freqVac > maxVaccines) {
     freqVac = maxVaccines;
   }
-
-  if (masks > maxMasks) {
-    masks = maxMasks;
+  if (freqMasks > maxMasks) {
+    freqMasks = maxMasks;
   }
 
-  let savedByVaccine = 0;
-  let savedByMask = 0;
-
-  // Simulating the effect of vaccines
+  // Iterating the effect of vaccines/masks
   for (let i = 0; i < freqVac; i++) {
-    if (survivors > 0) {
+    if (survivors < startPop) { // Give vaccinations only if there are still survivors
       survivors++;
-      savedByVaccine++;
+    }
+  }
+  for (let i = 0; i < freqMasks; i++) {
+    if (survivors < startPop && Math.random() > 0.5) { // 50% chance of survival with mask
+      survivors++;
     }
   }
 
-  // Simulating the effect of masks
-  for (let i = 0; i < masks; i++) {
-    if (survivors > 0 && Math.random() < 0.4) { // 40% chance of survival with mask
-      survivors++;
-      savedByMask++;
-    }
-  }
+  let finalDeaths = Math.min(startPop - survivors, maxDeaths); // Set a maximum to the number of deaths to the maximum possible value
 
-  deaths = Math.max(deaths - savedByVaccine - savedByMask, 0);
-  let output = `  Deaths: ${deaths} <br>
-                Survivors: ${Math.min(survivors, startPop)} <br>
-                Lives Saved by Vaccines: ${savedByVaccine} <br>
-                Lives Saved by Masks: ${savedByMask} <br>`;
-  document.getElementById("output").innerHTML = output;
+  // Create an object to store the simulationResults array for this iteration
+  let result = {
+    startPop: startPop,
+    freqVac: freqVac,
+    freqMasks: freqMasks,
+    deaths: finalDeaths,
+    survivors: survivors
+  };
+
+  // Push result into array
+  simulationResults.push(result);
+
+  // Output the simulation results into web page
+
+  document.getElementById("addOn").innerHTML = "";
+
+  for (let i = 0; i < simulationResults.length; i++) {
+
+    let addOn = document.getElementById("addOn");
+    let newRow = document.createElement("tr");
+
+    newRow.innerHTML = `
+      <td> #${i + 1}</td>
+      <td>${simulationResults[i].startPop}</td>
+      <td>${simulationResults[i].freqVac}</td>
+      <td>${simulationResults[i].freqMasks}</td>
+      <td>${simulationResults[i].deaths}</td>
+      <td>${simulationResults[i].survivors}</td>
+    `;
+
+    addOn.appendChild(newRow);
+  }
+} 
+
+function restart() {
+  window.location.href = "index.html";
 }
-
-// Get input values and call the simulate function
-const startPopInput = document.getElementById("startPop");
-const freqVacInput = document.getElementById("freqVac");
-const masksInput = document.getElementById("masks");
-const simulateBtn = document.querySelector("button");p
-
-simulateBtn.addEventListener("click", function () {
-  const startPop = parseInt(startPopInput.value);
-  const freqVac = parseInt(freqVacInput.value);
-  const masks = parseInt(masksInput.value);
-
-  simulate(startPop, freqVac, masks);
-});
